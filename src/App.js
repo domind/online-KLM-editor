@@ -13,7 +13,8 @@ import {
   redMarker,
   circleMarker,
   blueMarker,
-  getRandomColor
+  getRandomColor,
+  readColor
 } from "./icons";
 
 import "./App.css";
@@ -122,16 +123,15 @@ class App extends React.Component {
         .querySelector("styleUrl")
         .firstChild.nodeValue.replace("#", "");
       colorRead.push(
-        "#" +
+        "#" +readColor(
           xmlDoc
             .getElementById(styleCheck)
             .querySelector("color")
-            .firstChild.nodeValue.slice(2)
+            .firstChild.nodeValue.slice(2))
       );
 
       let myPoints = xmlDoc
-        .querySelectorAll("LineString coordinates")
-        [x].childNodes[0].nodeValue.replace(/(\r\n|\n|\r|\t)/gm, "");
+        .querySelectorAll("LineString coordinates")[x].childNodes[0].nodeValue.replace(/(\r\n|\n|\r|\t)/gm, "");
       let arrPoints = myPoints.split(/[ ,]+/);
       xarray[x] = [];
       for (let i = 0; i < arrPoints.length / 3 - 1; i++) {
@@ -256,7 +256,7 @@ class App extends React.Component {
         '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom"><Document><name>' +
         this.state.lineNames[pathNumber] +
         '</name><StyleMap id="msn_ylw-pushpin92"><Pair><key>normal</key><styleUrl>#sn_ylw-pushpin10</styleUrl></Pair></StyleMap><Style id="sn_ylw-pushpin10"><LineStyle><color>ff' +
-        this.state.originalColors[pathNumber].replace("#", "") +
+        readColor(this.state.originalColors[pathNumber].replace("#", "")) +
         "</color><width>4</width></LineStyle></Style><Placemark><name>" +
         this.state.lineNames[pathNumber] +
         "</name><open>1</open><styleUrl>#msn_ylw-pushpin92</styleUrl><LineString><tessellate>1</tessellate><coordinates>" +
@@ -371,8 +371,9 @@ class App extends React.Component {
                 <Row>
                   <Col>
                     <Table bordered>
+                      <tbody>
                       {this.state.lineNames.map((x, index) => (
-                        <tr>
+                        <tr key={index}>
                           <td
                             style={{
                               backgroundColor: this.state.originalColors[index]
@@ -388,6 +389,7 @@ class App extends React.Component {
                           </td>
                         </tr>
                       ))}
+                      </tbody>
                     </Table>
                   </Col>
                 </Row>

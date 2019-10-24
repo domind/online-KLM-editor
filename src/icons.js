@@ -32,3 +32,8 @@ export function getRandomColor() {
     }
     return color;
   }
+
+export function readColor(e){
+ let newColor = e.slice(4,6)+e.slice(2,4)+e.slice(0,2);
+ return newColor;
+}
