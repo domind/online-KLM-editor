@@ -1,3 +1,8 @@
+## Online editor for KLM paths
+You can display your paths from KML file on openstreet map
+Paths can be reversed, divided, marked with other color and saved back to KLM file
+<br /><br />
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
